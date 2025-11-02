@@ -30,7 +30,6 @@ java {
     targetCompatibility = JavaVersion.VERSION_11
 }
 
-// Add this for running DatasetGenerator
 task runDatasetGenerator(type: JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     mainClass = 'DatasetGenerator'

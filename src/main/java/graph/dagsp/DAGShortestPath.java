@@ -3,9 +3,7 @@ package graph.dagsp;
 import graph.Metrics;
 import java.util.*;
 
-/**
- * Shortest and longest paths in Directed Acyclic Graphs
- */
+
 public class DAGShortestPath {
     private Metrics metrics;
 
@@ -23,9 +21,7 @@ public class DAGShortestPath {
         }
     }
 
-    /**
-     * Single-source shortest paths using topological order
-     */
+
     public Map<Integer, Integer> shortestPaths(
             GraphWithWeights graphWithWeights,
             List<Integer> topologicalOrder,
@@ -36,7 +32,6 @@ public class DAGShortestPath {
         Map<Integer, Integer> dist = new HashMap<>();
         Map<Integer, Integer> prev = new HashMap<>();
 
-        // Initialize distances
         for (Integer node : graphWithWeights.graph.keySet()) {
             dist.put(node, Integer.MAX_VALUE);
         }
@@ -63,10 +58,7 @@ public class DAGShortestPath {
         metrics.stopTimer();
         return dist;
     }
-
-    /**
-     * Find longest path (critical path) using sign inversion
-     */
+    
     public CriticalPathResult longestPath(
             GraphWithWeights graphWithWeights,
             List<Integer> topologicalOrder) {
@@ -75,19 +67,16 @@ public class DAGShortestPath {
 
         Map<Integer, Integer> dist = new HashMap<>();
         Map<Integer, Integer> prev = new HashMap<>();
-
-        // Initialize distances to negative infinity for longest path
+        
         for (Integer node : graphWithWeights.graph.keySet()) {
             dist.put(node, Integer.MIN_VALUE);
         }
-
-        // Find nodes with zero in-degree as potential starts
+        
         Set<Integer> startNodes = findStartNodes(graphWithWeights.graph);
         for (Integer start : startNodes) {
             dist.put(start, 0);
         }
-
-        // Process in topological order
+        
         for (Integer node : topologicalOrder) {
             if (dist.get(node) != Integer.MIN_VALUE) {
                 for (Integer neighbor : graphWithWeights.graph.getOrDefault(node, new ArrayList<>())) {
@@ -105,7 +94,6 @@ public class DAGShortestPath {
             }
         }
 
-        // Find the critical path (longest path)
         int maxDist = Integer.MIN_VALUE;
         int endNode = -1;
         for (Map.Entry<Integer, Integer> entry : dist.entrySet()) {
@@ -115,7 +103,7 @@ public class DAGShortestPath {
             }
         }
 
-        // Reconstruct critical path
+
         List<Integer> criticalPath = reconstructPath(prev, endNode, startNodes);
 
         metrics.stopTimer();

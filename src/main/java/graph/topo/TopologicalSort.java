@@ -3,9 +3,6 @@ package graph.topo;
 import graph.Metrics;
 import java.util.*;
 
-/**
- * Kahn's algorithm for topological sorting
- */
 public class TopologicalSort {
     private Metrics metrics;
 
@@ -18,7 +15,6 @@ public class TopologicalSort {
 
         Map<Integer, Integer> inDegree = new HashMap<>();
 
-        // Initialize in-degree for all nodes
         for (Integer node : graph.keySet()) {
             inDegree.putIfAbsent(node, 0);
             for (Integer neighbor : graph.get(node)) {
@@ -26,7 +22,6 @@ public class TopologicalSort {
             }
         }
 
-        // Queue for nodes with zero in-degree
         Queue<Integer> queue = new LinkedList<>();
         for (Map.Entry<Integer, Integer> entry : inDegree.entrySet()) {
             if (entry.getValue() == 0) {
@@ -53,7 +48,6 @@ public class TopologicalSort {
 
         metrics.stopTimer();
 
-        // Check for cycles
         if (topologicalOrder.size() != graph.size()) {
             throw new IllegalArgumentException("Graph has cycles, topological sort not possible");
         }

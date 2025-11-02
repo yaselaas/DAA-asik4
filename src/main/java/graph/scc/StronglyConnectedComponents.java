@@ -3,9 +3,7 @@ package graph.scc;
 import graph.Metrics;
 import java.util.*;
 
-/**
- * Implementation of Tarjan's algorithm for finding Strongly Connected Components
- */
+
 public class StronglyConnectedComponents {
     private Map<String, List<String>> graph;
     private Map<String, Integer> indices;
@@ -50,7 +48,6 @@ public class StronglyConnectedComponents {
         stack.push(node);
         onStack.add(node);
 
-        // Consider successors
         List<String> neighbors = graph.getOrDefault(node, new ArrayList<>());
         for (String neighbor : neighbors) {
             metrics.incrementEdgesTraversed();
@@ -63,7 +60,6 @@ public class StronglyConnectedComponents {
             }
         }
 
-        // If node is a root node, pop the stack and generate an SCC
         if (lowLinks.get(node).equals(indices.get(node))) {
             List<String> scc = new ArrayList<>();
             String popNode;
@@ -76,9 +72,6 @@ public class StronglyConnectedComponents {
         }
     }
 
-    /**
-     * Build condensation graph (DAG of SCCs)
-     */
     public Map<Integer, List<Integer>> buildCondensationGraph(
             List<List<String>> sccs,
             Map<String, List<String>> originalGraph) {

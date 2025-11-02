@@ -31,14 +31,13 @@ public class SimpleDatasetGenerator {
 
         Map<String, List<String>> graph = new HashMap<>();
         List<String> nodeList = new ArrayList<>();
-        
+
         for (int i = 0; i < nodes; i++) {
             String nodeName = "T" + i;
             nodeList.add(nodeName);
             graph.put(nodeName, new ArrayList<>());
         }
 
-        // Добавить рёбра
         int edgesAdded = 0;
         int attempts = 0;
         int maxAttempts = edges * 10;
